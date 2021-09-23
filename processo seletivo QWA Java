@@ -1,0 +1,468 @@
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.function.Predicate;
+public class Main{
+
+
+    public static class Candidato {
+
+        public String nome;
+
+        public String sobrenome;
+        public String cpf;
+        public int idade;
+
+    } // fecha candidato
+    public static void ListarCandidatos(ArrayList < Candidato > colaboradores) {
+
+        System.out.println("usuarios cadastrados:");
+
+
+        for (Candidato item: colaboradores) {
+
+            System.out.println("Nome:" + item.nome);
+
+        }
+
+    }
+
+
+    public static void main(String[] args) {
+
+        Scanner entrada = new Scanner(System.in);
+
+        String anos, cpf = "x", nome, sobrenome, parar, menu1;
+        boolean validaCPF = true;
+        boolean validacao = true;
+        int relogio = 0, idade, cont = 0, decre = 10, menu, contador = 0, contador2 = 0, contador3 = 0, contador4 = 0, contador5 = 0;
+        ArrayList < Candidato > colaboradores = new ArrayList < > ();
+
+        System.out.println("vamos inserir os candidatos");
+
+
+        do {
+
+            System.out.println("digite o nome");
+
+            nome = entrada.nextLine();
+
+            if (nome.length() == 0) {
+
+                System.out.println("preenchimento obrigatorio");
+                continue;
+            } // fecha if nome           
+            System.out.println("digite o sobrenome");
+
+            sobrenome = entrada.nextLine();
+
+            if (sobrenome.length() == 0) {
+
+                System.out.println("preenchimento obrigatorio");
+
+                continue;
+
+            } // fecha if sobrenome
+            System.out.println("digite o cpf");
+
+            cpf = entrada.nextLine();
+            if (cpf.length() < 11 || cpf.length() > 11) {
+                System.out.println("o cpf por padrão possui 11 digitos ");
+                System.out.println("usuario não cadastrado  ");
+                continue;
+
+            }
+
+            if (cpf.length() == 0) {
+
+                System.out.println("preenchimento obrigatorio");
+
+                continue;
+
+            } // fecha if cpf
+
+
+            for (Candidato item: colaboradores) {
+                if (item.cpf.contentEquals(cpf)) {
+                    validaCPF = false;
+                }
+            }
+
+            if (!validaCPF) {
+                System.out.println("CPF ja cadastrado anteriormente !");
+                validaCPF = true;
+                continue;
+            }
+
+            System.out.println("digite a idade");
+
+            anos = entrada.nextLine();
+
+            if (anos.length() == 0) {
+
+                System.out.println("preenchimento obrigatorio");
+
+            } // fecha if idade
+
+            idade = Integer.parseInt(anos);
+
+
+            if (idade >= 18) {
+                System.out.println(" sim é maior de idade");
+            } // fecha if maior a 18
+
+
+            Candidato candidato = new Candidato();
+            candidato.nome = nome;
+
+            candidato.sobrenome = sobrenome;
+
+            candidato.idade = idade;
+
+            candidato.cpf = cpf;
+
+            colaboradores.add(candidato);
+            decre--;
+            System.out.println("deseja finalizar o processo e salvar os usuarios cadastrados  (s/n) restam" + decre + "candidatos");
+
+            parar = entrada.nextLine();
+
+
+            cont++;
+
+            if (parar.equalsIgnoreCase("s")) {
+
+                System.out.println("finalizado ");
+
+                System.out.println("vocC* incluiu" + cont + "candidatos");
+
+                break;
+
+            } // fecha parar 1           
+        } while (cont < 11);
+        ListarCandidatos(colaboradores);
+
+        do {
+            System.out.println("vamos as vagas: (lembre-se 3 usuarios por vaga)");
+            System.out.println("1-analista de rh");
+            System.out.println("2-desenvolvedor java");
+            System.out.println("3-dba oracle");
+            System.out.println("4-assistente administrativo");
+            System.out.println("5-segurança");
+            System.out.println("6- para parar de inserir os candidatos nas vagas");
+            menu = entrada.nextInt();
+
+            if (menu == 1) {
+
+                System.out.println("analista de rh,candidatos:");
+
+                System.out.println("digite o nome do usuasrio para iserir");
+                menu1 = entrada.next();
+
+
+                if (cont == 1) {
+                    for (Candidato item: colaboradores) {
+                        if (item.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("usuario" + menu1 + "inserido");
+
+
+                            break;
+                        }
+                    }
+                }
+                for (Candidato item: colaboradores) {
+                    if (item.nome.equalsIgnoreCase(menu1)) {
+                        System.out.println("usuario" + menu1 + "inserido");
+                        validacao = true;
+                    } else if (!validacao) {
+                        System.out.println("usuario não está no cadastro");
+
+                    }
+
+                } // fecha for
+
+                if (validacao == true) {
+                    for (int item = 0; item < colaboradores.size(); item++) {
+                        Candidato colaborador = colaboradores.get(item);
+                        if (colaborador.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("1-" + colaboradores.get(item).nome);
+                            colaboradores.remove(item);
+                            contador++;
+                            ListarCandidatos(colaboradores);
+                            System.out.println("usuario inserido (sera removido da lista para que não falte oportunidades para outros candidatos)");
+
+                        }
+                    }
+
+
+                }
+                ListarCandidatos(colaboradores);
+
+
+
+                if (contador == 4) {
+                    System.out.println(" desculpe 3 usuarios por vaga");
+                    System.out.println("usuarios restantes:");
+                    ListarCandidatos(colaboradores);
+                    break;
+                }
+
+
+            } // fecha if menu 1
+
+
+
+            if (menu == 2) { // abre menu =2
+
+
+                System.out.println("DESENVOLVEDOR JAVA");
+                System.out.println("digite o nome do usuasrio para iserir");
+                menu1 = entrada.next();
+
+                if (cont == 1) {
+                    for (Candidato item: colaboradores) {
+                        if (item.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("usuario" + menu1 + "inserido");
+
+
+                            break;
+                        }
+                    }
+                }
+                for (Candidato item: colaboradores) {
+                    if (item.nome.equalsIgnoreCase(menu1)) {
+                        System.out.println("usuario" + menu1 + "inserido");
+                        validacao = true;
+                    } else if (!validacao) {
+                        System.out.println("usuario não está no cadastro");
+
+                    }
+
+                } // fecha for
+
+                if (validacao == true) {
+                    for (int item = 0; item < colaboradores.size(); item++) {
+                        Candidato colaborador = colaboradores.get(item);
+                        if (colaborador.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("1-" + colaboradores.get(item).nome);
+                            colaboradores.remove(item);
+                            contador2++;
+                            ListarCandidatos(colaboradores);
+                            System.out.println("usuario inserido (sera removido da lista para que não falte oportunidades para outros candidatos)");
+
+                        }
+                    }
+
+
+                }
+                ListarCandidatos(colaboradores);
+
+
+
+                if (contador2 == 4) {
+                    System.out.println(" desculpe 3 usuarios por vaga");
+                    System.out.println("usuarios restantes:");
+                    ListarCandidatos(colaboradores);
+                    break;
+                }
+
+
+
+
+            } // fecha if menu 2
+
+
+            if (menu == 3) { // abre menu =3
+
+
+                System.out.println("DBA ORACLE LEMBRE-SE 3 USUARIOS POR VAGA");
+                System.out.println("digite o nome do usuasrio para iserir");
+                menu1 = entrada.next();
+
+                if (cont == 1) {
+                    for (Candidato item: colaboradores) {
+                        if (item.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("usuario" + menu1 + "inserido");
+
+
+                            break;
+                        }
+                    }
+                }
+                for (Candidato item: colaboradores) {
+                    if (item.nome.equalsIgnoreCase(menu1)) {
+                        System.out.println("usuario" + menu1 + "inserido");
+                        validacao = true;
+                    } else if (!validacao) {
+                        System.out.println("usuario não está no cadastro");
+
+                    }
+
+                } // fecha for
+
+                if (validacao == true) {
+                    for (int item = 0; item < colaboradores.size(); item++) {
+                        Candidato colaborador = colaboradores.get(item);
+                        if (colaborador.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("1-" + colaboradores.get(item).nome);
+                            colaboradores.remove(item);
+                            contador3++;
+                            ListarCandidatos(colaboradores);
+                            System.out.println("usuario inserido (sera removido da lista para que não falte oportunidades para outros candidatos)");
+
+                        }
+                    }
+
+
+                }
+                ListarCandidatos(colaboradores);
+
+
+
+                if (contador3 == 4) {
+                    System.out.println(" desculpe 3 usuarios por vaga");
+                    System.out.println("usuarios restantes:");
+                    ListarCandidatos(colaboradores);
+                    break;
+                }
+
+
+
+
+            } // fecha if menu 3
+
+
+
+            if (menu == 4) { // abre menu =4
+
+
+                System.out.println("ASSISTENTE ADMINISTRATIVO");
+                System.out.println("digite o nome do usuario para iserir");
+                menu1 = entrada.next();
+
+                if (cont == 1) {
+                    for (Candidato item: colaboradores) {
+                        if (item.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("usuario" + menu1 + "inserido");
+
+
+                            break;
+                        }
+                    }
+                }
+                for (Candidato item: colaboradores) {
+                    if (item.nome.equalsIgnoreCase(menu1)) {
+                        System.out.println("usuario" + menu1 + "inserido");
+                        validacao = true;
+                    } else if (!validacao) {
+                        System.out.println("usuario não está no cadastro");
+
+                    }
+
+                } // fecha for
+
+                if (validacao == true) {
+                    for (int item = 0; item < colaboradores.size(); item++) {
+                        Candidato colaborador = colaboradores.get(item);
+                        if (colaborador.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("1-" + colaboradores.get(item).nome);
+                            colaboradores.remove(item);
+                            contador4++;
+                            ListarCandidatos(colaboradores);
+                            System.out.println("usuario inserido (sera removido da lista para que não falte oportunidades para outros candidatos)");
+
+                        }
+                    }
+
+
+                }
+                ListarCandidatos(colaboradores);
+
+
+
+                if (contador4 == 4) {
+                    System.out.println(" desculpe 3 usuarios por vaga");
+                    System.out.println("usuarios restantes:");
+                    ListarCandidatos(colaboradores);
+                    break;
+                }
+
+
+
+
+            } // fecha if menu 4
+
+
+            if (menu == 5) { // abre menu =5
+
+
+                System.out.println("SEGURANÇA (LEMBRE-SE 3 USUARIOS POR VAGA)");
+                System.out.println("digite o nome do usuasrio para iserir");
+                menu1 = entrada.next();
+
+                if (cont == 1) {
+                    for (Candidato item: colaboradores) {
+                        if (item.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("usuario" + menu1 + "inserido");
+
+
+                            break;
+                        }
+                    }
+                }
+                for (Candidato item: colaboradores) {
+                    if (item.nome.equalsIgnoreCase(menu1)) {
+                        System.out.println("usuario" + menu1 + "inserido");
+                        validacao = true;
+                    } else if (!validacao) {
+                        System.out.println("usuario não está no cadastro");
+
+                    }
+
+                } // fecha for
+
+                if (validacao == true) {
+                    for (int item = 0; item < colaboradores.size(); item++) {
+                        Candidato colaborador = colaboradores.get(item);
+                        if (colaborador.nome.equalsIgnoreCase(menu1)) {
+                            System.out.println("1-" + colaboradores.get(item).nome);
+                            colaboradores.remove(item);
+                            contador5++;
+                            ListarCandidatos(colaboradores);
+                            System.out.println("usuario inserido (sera removido da lista para que não falte oportunidades para outros candidatos)");
+
+                        }
+                    }
+
+
+                }
+                ListarCandidatos(colaboradores);
+
+
+
+                if (contador5 == 4) {
+                    System.out.println(" desculpe 3 usuarios por vaga");
+                    System.out.println("usuarios restantes:");
+                    ListarCandidatos(colaboradores);
+                    break;
+                }
+
+
+
+
+            } // fecha if menu 5
+
+            if (menu == 6) {
+                System.out.println("finalizando");
+                System.out.println("usuarios restantes:");
+                ListarCandidatos(colaboradores);
+            }
+
+
+
+
+            relogio++;
+        } while (relogio <= cont);
+    } // fim do programa
+} // fim do programa
